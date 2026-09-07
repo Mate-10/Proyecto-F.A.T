@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Hospitales cercanos | Emergencia{% endblock %}
+
+{% block content %}
+<main class="content-panel">
+    <h2>Hospitales cercanos</h2>
+    <p>En esta sección podrás consultar los centros de salud disponibles cerca de tu ubicación.</p>
+    <p>Activa la ubicación del dispositivo para incorporar un buscador de hospitales.</p>
+    <a class="back-link" href="{% url 'inicio' %}">Volver al inicio</a>
+</main>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Formulario de emergencia | Emergencia{% endblock %}
+
+{% block content %}
+<main class="content-panel">
+    <h2>Formulario de emergencia</h2>
+    <form class="emergency-form" method="post">
+        {% csrf_token %}
+        <label for="nombre">Nombre</label>
+        <input id="nombre" name="nombre" type="text" required>
+
+        <label for="telefono">Teléfono</label>
+        <input id="telefono" name="telefono" type="tel" required>
+
+        <label for="ubicacion">Ubicación</label>
+        <input id="ubicacion" name="ubicacion" type="text" required>
+
+        <label for="descripcion">Describe la emergencia</label>
+        <textarea id="descripcion" name="descripcion" required></textarea>
+
+        <button class="form-submit" type="submit">Enviar información</button>
+    </form>
+    <a class="back-link" href="{% url 'inicio' %}">Volver al inicio</a>
+</main>
+{% endblock %}

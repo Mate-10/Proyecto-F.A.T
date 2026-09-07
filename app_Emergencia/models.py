@@ -76,9 +76,11 @@ class Tutoriales(models.Model):
 
 class Usuario(models.Model):
     id_usuario = models.AutoField(primary_key=True)
-    nombre = models.CharField(max_length=15, blank=True, null=True)
+    nombre = models.CharField(max_length=15)
     ubicacion = models.CharField(max_length=50, blank=True, null=True)
     telefono = models.CharField(max_length=10, blank=True, null=True)
+    email = models.CharField(max_length=100)
+    contrasena = models.CharField(max_length=100)
 
     class Meta:
         managed = False

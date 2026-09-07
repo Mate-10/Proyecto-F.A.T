@@ -1,0 +1,89 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Crear cuenta</title>
+
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <div class="tarjeta">
+
+            <h1>Crear cuenta</h1>
+
+            <p class="subtitulo">
+                Registrate para utilizar Emergencia
+            </p>
+
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <input
+                    type="text"
+                    name="nombre"
+                    placeholder="Nombre"
+                    required
+                >
+
+                <input
+                    type="text"
+                    name="ubicacion"
+                    placeholder="Ubicación"
+                    required
+                >
+
+                <input
+                    type="text"
+                    name="telefono"
+                    placeholder="Teléfono"
+                    required
+                >
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Correo electrónico"
+                    required
+                >
+
+                <input
+                    type="password"
+                    name="contrasena"
+                    placeholder="Contraseña"
+                    required
+                >
+
+                <button type="submit">
+                    Registrarme
+                </button>
+
+            </form>
+
+            <p class="cambio">
+
+                ¿Ya tenés una cuenta?
+
+                <a href="{% url 'login' %}">
+                    Iniciar sesión
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

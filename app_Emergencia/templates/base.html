@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	{% load static %}
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}Emergencia{% endblock %}</title>
+	<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+	<body>
+	<header class="site-header">
+		<div class="header-content">
+			<a class="brand" href="{% url 'inicio' %}">Emergencia</a>
+			<nav class="site-nav" aria-label="Navegación principal">
+				<a class="nav-link" href="{% url 'inicio' %}">Inicio</a>
+				<a class="login-button" href="{% url 'login' %}">Iniciar sesión</a>
+			</nav>
+		</div>
+	</header>
+
+	<div class="page-content">
+		{% block content %}{% endblock %}
+	</div>
+
+	<footer class="site-footer">
+		<div class="footer-content">
+			<p>&copy; {% now "Y" %} Emergencia</p>
+			<p>Siempre listos para ayudarte</p>
+		</div>
+	</footer>
+</body>
+</html>

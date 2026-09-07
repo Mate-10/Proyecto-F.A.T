@@ -1,0 +1,98 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e63946, #8d1b28);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.tarjeta {
+    width: 400px;
+    background: white;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.tarjeta h1 {
+    color: #c1121f;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.subtitulo {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #c1121f;
+}
+
+button {
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    background: #c1121f;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #a30f1a;
+}
+
+.cambio {
+    margin-top: 25px;
+    color: #666;
+}
+
+.cambio a {
+    color: #c1121f;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.cambio a:hover {
+    text-decoration: underline;
+}
+
+.error {
+    background: #ffe5e5;
+    color: #b00020;
+    padding: 10px;
+    border-radius: 7px;
+    margin-bottom: 15px;
+}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Tutoriales | Emergencia{% endblock %}
+
+{% block content %}
+<main class="content-panel">
+    <h2>Tutoriales</h2>
+    <p>Aquí encontrarás material para aprender cómo actuar ante diferentes tipos de emergencia.</p>
+    <p>A continuación, un listado de guías y cursos de primeros auxilios de Cruz Roja España:</p>
+
+    <ul class="guias-lista">
+        <li><a href="https://www2.cruzroja.es/web/cruzroja/-/iniciacion-primeros-auxilios" target="_blank" rel="noopener noreferrer">Iniciación a los primeros auxilios</a></li>
+        <li><a href="https://www2.cruzroja.es/web/cruzroja/-/primeros-auxilios-basicos" target="_blank" rel="noopener noreferrer">Primeros Auxilios Básicos</a></li>
+        <li><a href="https://www2.cruzroja.es/web/cruzroja/-/primeros-auxilios-para-bebes-y-ni-c3-b1os" target="_blank" rel="noopener noreferrer">Primeros Auxilios para Bebés y Niños</a></li>
+        <li><a href="https://www2.cruzroja.es/web/cruzroja/-/primeros-auxilios-en-el-ambito-laboral" target="_blank" rel="noopener noreferrer">Primeros Auxilios en el Ámbito Laboral</a></li>
+        <li><a href="https://www2.cruzroja.es/web/cruzroja/-/primeros-auxilios-en-el-deporte" target="_blank" rel="noopener noreferrer">Primeros Auxilios en el Deporte</a></li>
+        <li><a href="https://www2.cruzroja.es/web/cruzroja/-/primeros-auxilios-en-el-hogar" target="_blank" rel="noopener noreferrer">Primeros Auxilios en el Hogar</a></li>
+        <li><a href="https://www2.cruzroja.es/web/cruzroja/-/primeros-auxilios-en-la-naturaleza" target="_blank" rel="noopener noreferrer">Primeros Auxilios en la Naturaleza</a></li>
+        <li><a href="https://www2.cruzroja.es/web/cruzroja/-/primeros-auxilios-para-personas-mayores" target="_blank" rel="noopener noreferrer">Primeros Auxilios en Personas Mayores</a></li>
+        <li><a href="https://www2.cruzroja.es/web/cruzroja/-/primeros-auxilios-para-cooperantes" target="_blank" rel="noopener noreferrer">Primeros Auxilios para Cooperantes</a></li>
+        <li><a href="https://www2.cruzroja.es/web/cruzroja/-/curso-primeros-auxili-1" target="_blank" rel="noopener noreferrer">Curso de Primeros Auxilios</a></li>
+        <li><a href="https://www2.cruzroja.es/web/cruzroja/-/soporte-vital-basi-1" target="_blank" rel="noopener noreferrer">Soporte Vital Básico</a></li>
+        <li><a href="https://www2.cruzroja.es/web/cruzroja/-/formacion-inicial-desfibrilacion-automatica-externa" target="_blank" rel="noopener noreferrer">Formación Inicial en Desfibrilación Automática Externa (DEA)</a></li>
+        <li><a href="https://www2.cruzroja.es/web/cruzroja/-/formacion-renovacion-o-reciclaje-desfibrilacion-automatica-externa" target="_blank" rel="noopener noreferrer">Renovación / Reciclaje en Desfibrilación Automática Externa (DEA)</a></li>
+        <li><a href="https://www2.cruzroja.es/web/cruzroja/-/socorrismo-acuatico" target="_blank" rel="noopener noreferrer">Socorrismo Acuático</a></li>
+    </ul>
+
+    <p class="fuente-nota">Fuente: <a href="https://www2.cruzroja.es/cursos-primeros-auxilios" target="_blank" rel="noopener noreferrer">Cruz Roja Española</a></p>
+
+    <a class="back-link" href="{% url 'inicio' %}">Volver al inicio</a>
+</main>
+{% endblock %}

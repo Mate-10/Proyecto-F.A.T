@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio | Emergencia{% endblock %}
+
+{% block content %}
+
+<main class="home-content">
+    <h2>Bienvenido al sistema de emergencias</h2>
+    <p>Desde aquí puedes consultar y gestionar la información de emergencias.</p>
+
+    <div class="action-grid">
+        <a class="action-button" href="{% url 'guia_emergencia' %}">Guía de emergencia</a>
+        <a class="action-button" href="{% url 'hospitales_cercanos' %}">Hospitales cercanos</a>
+        <a class="action-button" href="{% url 'formulario_emergencia' %}">Formulario de emergencia</a>
+        <a class="action-button" href="{% url 'tutoriales' %}">Tutoriales</a>
+    </div>
+</main>
+{% endblock %}
