@@ -27,4 +27,5 @@ urlpatterns = [
     path('hospitales-cercanos/', views.hospitales_cercanos, name='hospitales_cercanos'),
     path('formulario-de-emergencia/', views.formulario_emergencia, name='formulario_emergencia'),
     path('tutoriales/', views.tutoriales, name='tutoriales'),
+    path('admin/', admin.site.urls),
 ]
