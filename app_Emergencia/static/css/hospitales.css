@@ -1,0 +1,102 @@
+.hospital-search-form {
+	display: flex;
+	gap: 0.75rem;
+	justify-content: center;
+	margin: 1.5rem auto;
+	max-width: 500px;
+}
+
+.hospital-search-form input {
+	border: 1px solid #b8d1c6;
+	border-radius: 4px;
+	flex: 1;
+	font: inherit;
+	padding: 0.7rem;
+}
+
+.hospital-search-form button {
+	background: var(--blue-dark);
+	border: 0;
+	border-radius: 6px;
+	color: var(--white);
+	cursor: pointer;
+	font: inherit;
+	font-weight: bold;
+	padding: 0.7rem 1.2rem;
+	transition: background 0.2s ease;
+}
+
+.hospital-search-form button:hover,
+.hospital-search-form button:focus {
+	background: var(--blue);
+}
+
+.map-preview {
+	margin: 1.5rem auto;
+	max-width: 600px;
+}
+
+.map-preview img {
+	border: 1px solid #b8d1c6;
+	border-radius: 8px;
+	box-shadow: 0 3px 10px rgba(35, 83, 71, 0.12);
+	width: 100%;
+}
+
+.hospital-list {
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	list-style: none;
+	margin: 2rem 0 0;
+	padding: 0;
+	text-align: left;
+}
+
+.hospital-card {
+	background: var(--blue-light);
+	border-radius: 8px;
+	overflow: hidden;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hospital-card:hover {
+	box-shadow: 0 5px 14px rgba(35, 83, 71, 0.15);
+	transform: translateY(-3px);
+}
+
+.hospital-link {
+	color: inherit;
+	display: block;
+	text-decoration: none;
+}
+
+.hospital-photo {
+	display: block;
+	height: 160px;
+	object-fit: cover;
+	width: 100%;
+}
+
+.hospital-info {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	padding: 0.85rem 1rem 1rem;
+}
+
+.hospital-name {
+	color: var(--blue-dark);
+	font-weight: bold;
+}
+
+.hospital-distance {
+	color: var(--text);
+	font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+	.hospital-search-form {
+		flex-direction: column;
+	}
+}

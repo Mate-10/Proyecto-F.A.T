@@ -85,3 +85,12 @@ class Usuario(models.Model):
     class Meta:
         managed = False
         db_table = 'usuario'
+
+class Hospitales(models.Model):
+    id_hospital = models.AutoField(primary_key=True)
+    nombre = models.CharField(db_column='Nombre', max_length=50)  # Field name made lowercase.
+    ubicacion = models.CharField(db_column='Ubicacion', max_length=50)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'hospitales'

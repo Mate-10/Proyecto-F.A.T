@@ -1,12 +1,47 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Hospitales cercanos | Emergencia{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/hospitales.css' %}">
+
 <main class="content-panel">
     <h2>Hospitales cercanos</h2>
-    <p>En esta sección podrás consultar los centros de salud disponibles cerca de tu ubicación.</p>
-    <p>Activa la ubicación del dispositivo para incorporar un buscador de hospitales.</p>
+    <p>Ingresá tu dirección para ver los hospitales más cercanos.</p>
+
+    <form method="POST" class="hospital-search-form">
+        {% csrf_token %}
+        <input type="text" name="direccion" placeholder="Ej: Av. Colón 500, Córdoba" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if mapa_url %}
+        <div class="map-preview">
+            <img src="{{ mapa_url }}" alt="Mapa de hospitales cercanos">
+        </div>
+    {% endif %}
+
+    {% if hospitales_cercanos %}
+        <ul class="hospital-list">
+            {% for hospital in hospitales_cercanos %}
+                <li class="hospital-card">
+                    <a href="https://www.google.com/maps?q={{ hospital.lat }},{{ hospital.lon }}" target="_blank" class="hospital-link">
+                        <img src="{% static hospital.imagen %}" alt="{{ hospital.nombre }}" class="hospital-photo">
+                        <div class="hospital-info">
+                            <span class="hospital-name">{{ hospital.nombre }}</span>
+                            <span class="hospital-distance">{{ hospital.distancia|floatformat:2 }} km</span>
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     <a class="back-link" href="{% url 'inicio' %}">Volver al inicio</a>
 </main>
 {% endblock %}
