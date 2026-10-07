@@ -66,8 +66,8 @@ class TipoAccidente(models.Model):
 
 class Tutoriales(models.Model):
     id_tuto = models.AutoField(primary_key=True)
-    titulo = models.CharField(max_length=15, blank=True, null=True)
-    link = models.CharField(max_length=50, blank=True, null=True)
+    titulo = models.CharField(max_length=50, blank=True, null=True)
+    link = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         managed = False

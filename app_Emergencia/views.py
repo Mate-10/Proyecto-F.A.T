@@ -85,9 +85,9 @@ imagenes_hospitales = {
     'Hospital de Urgencias (H.M.U.)': 'img/Hospital de Urgencias (H.M.U.).jpg',
     'Hospital de Niños de la Santísima Trinidad': 'img/hospital_de_niños_de_la_santisima_trinidad.webp',
     'Hospital Pediátrico del Niño Jesús': 'img/hospital-pediatrico-ninio-jesus.webp',
-    'Hospital Italiano Córdoba': 'img/hospital-italiano-cordoba-2059131.webp',
+    'Hospital Italiano de Córdoba': 'img/hospital-italiano-cordoba-2059131.webp',
     'Hospital Córdoba': 'img/hospital-cordoba.webp',
-    'Sanatorio Allende': 'img/sanatorio_allende-nueva_cordoba.jpg',
+    'Sanatorio Allende (Nueva Córdoba)': 'img/sanatorio_allende-nueva_cordoba.jpg',
 }
 
 coordenadas_hospitales = {
@@ -96,9 +96,9 @@ coordenadas_hospitales = {
     'Hospital de Urgencias (H.M.U.)': (-31.412831, -64.175937),
     'Hospital de Niños de la Santísima Trinidad': (-31.427542, -64.169082),
     'Hospital Pediátrico del Niño Jesús': (-31.399155, -64.197519),
-    'Hospital Italiano Córdoba': (-31.409382, -64.164624),
+    'Hospital Italiano de Córdoba': (-31.409382, -64.164624),
     'Hospital Córdoba': (-31.406446, -64.158075),
-    'Sanatorio Allende': (-31.424782, -64.187395),
+    'Sanatorio Allende (Nueva Córdoba)': (-31.424782, -64.187395),
 }
 
 
@@ -156,6 +156,7 @@ def hospitales_cercanos(request):
             )
 
             if coordenadas is None:
+                print('NO MATCHEA:', repr(hospital.nombre))
                 continue
 
             lat_hospital, lon_hospital = coordenadas
@@ -169,6 +170,7 @@ def hospitales_cercanos(request):
             hospital.imagen = imagenes_hospitales.get(hospital.nombre, 'img/hospital-default.jpg')
             hospital.lat = lat_hospital
             hospital.lon = lon_hospital
+            hospital.maps_query = f'{hospital.nombre} {hospital.ubicacion}, Córdoba, Argentina'
             lista_hospitales.append(hospital)
 
         lista_hospitales.sort(key=lambda h: h.distancia)

@@ -1,12 +1,266 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Tutoriales | Emergencia{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/tutoriales.css' %}">
+
 <main class="content-panel">
-    <h2>Tutoriales</h2>
-    <p>Aquí encontrarás material para aprender cómo actuar ante diferentes tipos de emergencia.</p>
-    <p>Próximamente podrás consultar videos y guías paso a paso.</p>
-    <a class="back-link" href="{% url 'inicio' %}">Volver al inicio</a>
+<div class="tuto">
+    <h2>Tutoriales de primeros auxilios</h2>
+    <p class="intro">Elegí una emergencia y seguí los pasos en orden.</p>
+
+    <div class="sos">
+        <b>Ante una emergencia grave llamá ya:</b>
+        <span>Emergencias médicas (SAME): <b>107</b></span>
+        <span>Policía / Emergencias: <b>911</b></span>
+        <span>Bomberos: <b>100</b></span>
+    </div>
+
+    <div class="pas">
+        <div><strong>1. Proteger</strong>Asegurá que el lugar sea seguro para vos y para la víctima.</div>
+        <div><strong>2. Alertar</strong>Llamá al 107 o 911: qué pasó, dónde estás y cuántas víctimas hay.</div>
+        <div><strong>3. Socorrer</strong>Verificá si responde y respira, y actuá según el caso.</div>
+    </div>
+
+    <nav class="indice" aria-label="Índice de tutoriales">
+        <a href="#herida">Heridas</a><a href="#atragantamiento">Atragantamiento</a><a href="#bebe">Bebé atragantado</a>
+        <a href="#quemadura">Quemaduras</a><a href="#hemorragia">Hemorragia</a><a href="#fractura">Fracturas</a>
+        <a href="#cabeza">Golpe en la cabeza</a><a href="#desmayo">Desmayo</a><a href="#convulsion">Convulsión</a>
+        <a href="#alergia">Alergia grave</a><a href="#picaduras">Picaduras y mordeduras</a><a href="#intoxicacion">Intoxicación</a>
+        <a href="#acv">ACV</a><a href="#infarto">Infarto</a><a href="#rcp">RCP y DEA</a>
+        <a href="#electrico">Accidente eléctrico</a><a href="#calor">Calor y frío extremo</a>
+    </nav>
+
+    <details id="herida"><summary><span class="ic"></span>Herida o corte profundo</summary><div class="cuerpo">
+        <ol>
+            <li>Lavate las manos y ponete guantes si tenés.</li>
+            <li>Presioná la herida con gasa o tela limpia, de forma firme y continua.</li>
+            <li>Si la gasa se empapa, no la saques: poné otra encima y seguí presionando.</li>
+            <li>Si es en un brazo o pierna, elevalo por encima del corazón.</li>
+            <li>Cuando deje de sangrar, cubrí con un vendaje limpio.</li>
+        </ol>
+        <p class="no"><b>No hagas:</b> sacar objetos clavados. Sujetalos con vendas alrededor y andá al hospital.</p>
+        <p class="llama"><b>Pedí atención médica si:</b> es profunda, los bordes están separados, está sucia, sangra más de 10 minutos o es una mordedura. Revisá la vacuna antitetánica.</p>
+        <p class="video"><a href="https://www.youtube.com/watch?v=Zf7HuY-fITU" target="_blank" rel="noopener">▶ Ver video (Cruz Roja Mexicana)</a></p>
+    </div></details>
+
+    <details id="atragantamiento"><summary><span class="ic"></span>Persona que se atraganta (adulto)</summary><div class="cuerpo">
+        <ol>
+            <li>Preguntale: «¿Te estás atragantando?». Si puede toser, hablar o respirar, animalo a seguir tosiendo.</li>
+            <li>Si no puede hablar, toser ni respirar, ubicate detrás y inclinalo hacia adelante.</li>
+            <li>Dale 5 golpes firmes en la espalda, entre los omóplatos, con el talón de la mano.</li>
+            <li>Si no sale el objeto, hacé 5 compresiones abdominales (Heimlich): puño sobre la boca del estómago, la otra mano encima, y tirá hacia adentro y hacia arriba.</li>
+            <li>Alterná 5 golpes y 5 compresiones hasta que expulse el objeto.</li>
+            <li>Si queda inconsciente, acostalo, llamá al 107/911 e iniciá RCP.</li>
+        </ol>
+        <p class="llama"><b>Embarazadas o personas muy corpulentas:</b> hacé las compresiones en el centro del pecho, no en el abdomen.</p>
+        <p class="video"><a href="https://www.youtube.com/watch?v=Zf7HuY-fITU" target="_blank" rel="noopener">▶ Ver video (Cruz Roja Mexicana)</a></p>
+    </div></details>
+
+    <details id="bebe"><summary><span class="ic"></span>Bebé que se atraganta (menos de 1 año)</summary><div class="cuerpo">
+        <ol>
+            <li>Si tose con fuerza o llora, dejalo y observalo.</li>
+            <li>Si no puede toser, llorar ni respirar, ponelo boca abajo sobre tu antebrazo, con la cabeza más baja que el cuerpo, sosteniéndole la mandíbula.</li>
+            <li>Dale 5 golpes en la espalda, entre los omóplatos, con el talón de la mano.</li>
+            <li>Dalo vuelta (boca arriba, cabeza más baja) y hacé 5 compresiones en el centro del pecho con dos dedos.</li>
+            <li>Repetí 5 golpes y 5 compresiones hasta que expulse el objeto.</li>
+            <li>Si pierde el conocimiento, llamá al 107/911 e iniciá RCP.</li>
+        </ol>
+        <p class="no"><b>No hagas:</b> Heimlich abdominal en bebés ni meter los dedos a ciegas en su boca.</p>
+        <p class="video"><a href="https://www.youtube.com/watch?v=Zf7HuY-fITU" target="_blank" rel="noopener">▶ Ver video (Cruz Roja Mexicana)</a></p>
+    </div></details>
+
+    <details id="quemadura"><summary><span class="ic"></span>Quemaduras</summary><div class="cuerpo">
+        <ol>
+            <li>Alejá a la persona de la fuente de calor. Si la ropa está en llamas: que no corra, que se tire al suelo y ruede, o cubrila con una manta.</li>
+            <li>Enfriá con agua corriente fresca (no helada) de 10 a 20 minutos.</li>
+            <li>Sacá anillos, pulseras y ropa que no esté pegada antes de que se hinche.</li>
+            <li>Cubrí con gasa limpia o film transparente, sin apretar.</li>
+            <li>Quemadura química: sacá la ropa, cepillá el polvo seco y lavá con mucha agua al menos 20 minutos.</li>
+        </ol>
+        <p class="no"><b>No hagas:</b> poner hielo, manteca, pasta dental o cremas caseras, ni reventar las ampollas.</p>
+        <p class="llama"><b>Andá al hospital si:</b> es mayor que la palma de la mano de la víctima, está en cara, manos, genitales o articulaciones, es profunda, eléctrica o química, o la víctima es un niño o un adulto mayor.</p>
+        <p class="video"><a href="https://www.youtube.com/watch?v=29sJOBH_3mI" target="_blank" rel="noopener">▶ Ver video (Clínica Alemana)</a></p>
+    </div></details>
+
+    <details id="hemorragia"><summary><span class="ic"></span>Hemorragia</summary><div class="cuerpo">
+        <ol>
+            <li>Acostá a la persona y protegete con guantes.</li>
+            <li>Aplicá presión directa y firme con gasa o tela limpia, sin soltar.</li>
+            <li>Si podés, elevá la extremidad.</li>
+            <li>Si se empapa, agregá más tela encima y hacé un vendaje compresivo.</li>
+            <li>Si hay shock (palidez, sudor frío, confusión): acostala con las piernas elevadas y abrigala.</li>
+        </ol>
+        <h4>Torniquete (solo en brazo o pierna)</h4>
+        <p>Usalo solo si el sangrado no se controla y pone en riesgo la vida. Colocalo 5 a 7 cm por encima de la herida, nunca sobre una articulación, apretalo hasta que pare, anotá la hora y no lo aflojes.</p>
+        <h4>Hemorragia nasal</h4>
+        <p>Sentada, inclinada hacia adelante, apretá la parte blanda de la nariz durante 10 minutos.</p>
+        <p class="video"><a href="https://www.youtube.com/watch?v=29sJOBH_3mI" target="_blank" rel="noopener">▶ Ver video (Clínica Alemana)</a></p>
+    </div></details>
+
+    <details id="fractura"><summary><span class="ic"></span>Fractura o posible fractura</summary><div class="cuerpo">
+        <ol>
+            <li>No muevas la zona lesionada ni intentes acomodar el hueso.</li>
+            <li>Inmovilizá en la posición en que está, con una férula (cartón, revista enrollada, tabla) que abarque las articulaciones de arriba y de abajo.</li>
+            <li>Aplicá frío envuelto en un paño durante 20 minutos.</li>
+            <li>Si el hueso está expuesto, cubrí con gasa limpia sin empujarlo y controlá el sangrado alrededor.</li>
+            <li>Trasladala a un centro de salud.</li>
+        </ol>
+        <p class="no"><b>No hagas:</b> darle de comer ni beber (puede necesitar cirugía).</p>
+        <p class="llama"><b>Llamá al 107/911</b> si sospechás lesión de cuello o espalda y no muevas a la persona.</p>
+        <p class="video"><a href="https://www.youtube.com/results?search_query=fractura+primeros+auxilios+inmovilizar+f%C3%A9rula" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
+    </div></details>
+
+    <details id="cabeza"><summary><span class="ic"></span>Golpe fuerte en la cabeza</summary><div class="cuerpo">
+        <ol>
+            <li>Mantené a la persona quieta y observala.</li>
+            <li>Si sospechás lesión de cuello, no la muevas.</li>
+            <li>En golpes leves, aplicá frío envuelto en un paño 20 minutos y hacé reposo.</li>
+            <li>Que no quede sola durante las primeras 24 horas.</li>
+        </ol>
+        <p class="llama"><b>Llamá al 107/911 si hay:</b> pérdida de conocimiento, convulsión, vómitos repetidos, confusión o mucho sueño, dolor de cabeza intenso que aumenta, pupilas desiguales, debilidad, o sangre o líquido por nariz u oídos. Consultá siempre si es un bebé o niño pequeño, si toma anticoagulantes o si fue una caída desde altura.</p>
+        <p class="video"><a href="https://www.youtube.com/results?search_query=golpe+en+la+cabeza+primeros+auxilios+signos+de+alarma" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
+    </div></details>
+
+    <details id="desmayo"><summary><span class="ic"></span>Desmayo</summary><div class="cuerpo">
+        <ol>
+            <li>Acostala boca arriba y elevale las piernas unos 30 cm.</li>
+            <li>Aflojale la ropa del cuello y la cintura, y asegurá aire fresco.</li>
+            <li>Verificá que respire.</li>
+            <li>Al despertar, que se incorpore despacio. No le des de comer ni beber hasta que esté bien.</li>
+            <li>Revisá si se golpeó al caer.</li>
+        </ol>
+        <p class="llama"><b>Llamá al 107/911 e iniciá RCP</b> si no despierta en 1 minuto o no respira normalmente. Que la vea un médico si es el primer desmayo, si tuvo dolor de pecho o si está embarazada.</p>
+        <p class="video"><a href="https://www.procpr.org/es/training/cpr-first-aid/video/quemaduras-nino-es" target="_blank" rel="noopener">▶ Ver curso en video (ProCPR)</a></p>
+    </div></details>
+
+    <details id="convulsion"><summary><span class="ic"></span>Convulsión</summary><div class="cuerpo">
+        <ol>
+            <li>Anotá la hora de inicio.</li>
+            <li>Despejá objetos peligrosos y poné algo blando bajo la cabeza.</li>
+            <li>Aflojale la ropa del cuello.</li>
+            <li>Cuando termine, colocala de costado (posición lateral de seguridad).</li>
+            <li>Quedate con ella hasta que se recupere.</li>
+        </ol>
+        <p class="no"><b>No hagas:</b> sujetarla ni poner nada en su boca.</p>
+        <p class="llama"><b>Llamá al 107/911 si:</b> dura más de 5 minutos, se repite, no respira bien después, es la primera vez, está embarazada, tiene diabetes, se lastimó o ocurrió en el agua.</p>
+        <p class="video"><a href="https://www.procpr.org/es/training/cpr-first-aid/video/quemaduras-nino-es" target="_blank" rel="noopener">▶ Ver curso en video (ProCPR)</a></p>
+    </div></details>
+
+    <details id="alergia"><summary><span class="ic"></span>Reacción alérgica grave</summary><div class="cuerpo">
+        <p><b>Cómo reconocerla:</b> ronchas, hinchazón de labios, lengua o garganta, dificultad para respirar, silbidos, vómitos, mareo, palidez.</p>
+        <ol>
+            <li>Llamá al 107/911 de inmediato.</li>
+            <li>Si tiene autoinyector de adrenalina, aplicalo en la cara externa del muslo (se puede a través de la ropa) y seguí las instrucciones del dispositivo.</li>
+            <li>Acostala con las piernas elevadas. Si le cuesta respirar, que quede sentada.</li>
+            <li>Si no mejora a los 5 a 15 minutos y tiene otra dosis, repetí la aplicación.</li>
+        </ol>
+        <p class="llama"><b>Aunque mejore, debe ir al hospital:</b> los síntomas pueden volver.</p>
+        <p class="video"><a href="https://www.youtube.com/results?search_query=anafilaxia+autoinyector+adrenalina+c%C3%B3mo+usar" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
+    </div></details>
+
+    <details id="picaduras"><summary><span class="ic"></span>Picaduras y mordeduras</summary><div class="cuerpo">
+        <h4>Abeja o avispa</h4>
+        <p>Sacá el aguijón raspando con una tarjeta, lavá con agua y jabón y aplicá frío. Vigilá signos de alergia grave.</p>
+        <h4>Araña o alacrán</h4>
+        <p>Lavá, aplicá frío, mantené quieta la zona y andá al hospital cuanto antes, sobre todo si es un niño.</p>
+        <h4>Serpiente</h4>
+        <p>Mantené la calma, inmovilizá el miembro, sacá anillos y relojes y trasladala rápido al hospital.</p>
+        <p class="no"><b>No hagas:</b> torniquete, cortar o succionar la herida, ni aplicar hielo.</p>
+        <h4>Perro u otro animal (o mordedura humana)</h4>
+        <p>Lavá con agua y jabón de 5 a 10 minutos, cubrí con gasa y consultá por la vacuna antirrábica y antitetánica.</p>
+        <p class="video"><a href="https://www.youtube.com/watch?v=29sJOBH_3mI" target="_blank" rel="noopener">▶ Ver video (Clínica Alemana)</a></p>
+    </div></details>
+
+    <details id="intoxicacion"><summary><span class="ic"></span>Intoxicación</summary><div class="cuerpo">
+        <ol>
+            <li>Asegurate de que el lugar sea seguro (gases, humo, monóxido de carbono).</li>
+            <li>Identificá qué sustancia fue, cuánta, a qué hora, y la edad y peso de la persona. Guardá el envase.</li>
+            <li>Llamá a un Centro de Intoxicaciones o al 107/911. Centro Nacional de Intoxicaciones: 0800-333-0160.</li>
+            <li>Inhalación: llevala a respirar aire fresco.</li>
+            <li>Piel: sacale la ropa y lavá con agua 15 a 20 minutos.</li>
+            <li>Ojos: lavá con agua 15 a 20 minutos.</li>
+        </ol>
+        <p class="no"><b>No hagas:</b> provocar el vómito ni dar leche, aceite o remedios caseros.</p>
+        <p class="video"><a href="https://www.youtube.com/results?search_query=intoxicaci%C3%B3n+primeros+auxilios+qu%C3%A9+hacer" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
+    </div></details>
+
+    <details id="acv"><summary><span class="ic"></span>Señales de un ACV</summary><div class="cuerpo">
+        <ol>
+            <li><b>Cara:</b> pedile que sonría. ¿Un lado se cae?</li>
+            <li><b>Brazo:</b> que levante los dos brazos. ¿Uno cae o está débil?</li>
+            <li><b>Habla:</b> que repita una frase. ¿Arrastra las palabras o no se entiende?</li>
+            <li><b>Tiempo:</b> si hay alguna señal, llamá al 107/911 de inmediato y anotá la hora en que empezó.</li>
+        </ol>
+        <p>Otras señales: pérdida repentina de visión o equilibrio, dolor de cabeza muy fuerte y repentino. Mantenela acostada con la cabeza ligeramente elevada.</p>
+        <p class="no"><b>No hagas:</b> darle comida, bebida o medicamentos, ni esperar a ver si se pasa.</p>
+        <p class="video"><a href="https://www.youtube.com/results?search_query=ACV+reconocer+se%C3%B1ales+cara+brazo+habla" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
+    </div></details>
+
+    <details id="infarto"><summary><span class="ic"></span>Señales de un infarto</summary><div class="cuerpo">
+        <p><b>Cómo reconocerlo:</b> dolor, presión u opresión en el pecho que puede irradiarse al brazo, mandíbula, cuello o espalda; falta de aire, sudor frío, náuseas, mareo. En mujeres y personas mayores puede ser más leve o atípico.</p>
+        <ol>
+            <li>Llamá al 107/911 de inmediato.</li>
+            <li>Ponela en reposo, sentada o semisentada, y aflojale la ropa.</li>
+            <li>Si no es alérgica y el servicio de emergencias te lo indica, puede masticar una aspirina. Si tiene nitroglicerina indicada por su médico, que la use como le indicaron.</li>
+            <li>Si pierde el conocimiento y no respira, iniciá RCP y usá el DEA.</li>
+        </ol>
+        <p class="video"><a href="https://www.youtube.com/results?search_query=infarto+s%C3%ADntomas+qu%C3%A9+hacer+primeros+auxilios" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
+    </div></details>
+
+    <details id="rcp"><summary><span class="ic"></span>RCP y uso del desfibrilador (DEA)</summary><div class="cuerpo">
+        <ol>
+            <li>Verificá que sea seguro, sacudila suavemente y gritale. Si no responde y no respira (o solo boquea), es un paro.</li>
+            <li>Llamá al 107/911 (o pedí qu llamen) y que traigan un DEA.</li>
+            <li>Acostala boca arriba sobre una superficie dura.</li>
+            <li>Compresiones: manos entrelazadas en el centro del pecho, brazos rectos, hundí unos 5 a 6 cm a un ritmo de 100 a 120 por minuto, dejando que el pecho vuelva a subir.</li>
+            <li>Si estás entrenado: 30 compresiones y 2 respiraciones boca a boca. Si no, solo compresiones continuas.</li>
+            <li>Cuando llegue el DEA: encendelo y seguí las voces. Pegá los parches en el pecho desnudo y seco.</li>
+            <li>Asegurate de que nadie la toque y presioná descarga si el aparato lo indica.</li>
+            <li>Retomá la RCP enseguida y no pares hasta que llegue ayuda o la persona reaccione.</li>
+        </ol>
+        <p class="llama"><b>Niños y bebés:</b> las respiraciones son más importantes. Comprimí aproximadamente un tercio del tórax (con dos dedos en bebés) y seguí las indicaciones del operador.</p>
+        <p class="video"><a href="https://www.youtube.com/watch?v=Zf7HuY-fITU" target="_blank" rel="noopener">▶ Ver video (Cruz Roja Mexicana)</a></p>
+    </div></details>
+
+    <details id="electrico"><summary><span class="ic"></span>Accidente eléctrico</summary><div class="cuerpo">
+        <ol>
+            <li>No toques a la víctima hasta que no haya corriente.</li>
+            <li>Cortá la llave general. Si es alta tensión (cables caídos), alejate al menos 10 metros y llamá al 911 y a la empresa de energía.</li>
+            <li>Si es baja tensión y no podés cortar la corriente, separala con un objeto seco que no conduzca (madera, plástico), parado sobre algo seco.</li>
+            <li>Verificá si responde y respira. Si no, iniciá RCP y usá el DEA.</li>
+            <li>Cubrí con gasa limpia las quemaduras de entrada y de salida de la corriente.</li>
+        </ol>
+        <p class="llama"><b>Siempre debe ir al hospital,</b> aunque se vea bien: puede haber problemas del ritmo cardíaco.</p>
+        <p class="video"><a href="https://www.youtube.com/results?search_query=accidente+el%C3%A9ctrico+primeros+auxilios+descarga" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
+    </div></details>
+
+    <details id="calor"><summary><span class="ic"></span>Golpe de calor e hipotermia</summary><div class="cuerpo">
+        <h4>Golpe de calor</h4>
+        <p>Señales: temperatura muy alta, confusión, piel caliente, desmayo o convulsiones.</p>
+        <ol>
+            <li>Llamá al 107/911.</li>
+            <li>Llevala a la sombra o a un lugar fresco y sacale la ropa de más.</li>
+            <li>Enfriala rápido con agua fresca, paños mojados, abanico y compresas frías en cuello, axilas e ingles.</li>
+            <li>Si está consciente, que beba agua fresca en sorbos.</li>
+        </ol>
+        <p class="no"><b>No hagas:</b> darle medicamentos para la fiebre.</p>
+        <h4>Hipotermia</h4>
+        <p>Señales: temblor, torpeza, confusión, somnolencia, piel fría.</p>
+        <ol>
+            <li>Llamá al 107/911 y llevala a un lugar abrigado.</li>
+            <li>Sacale la ropa mojada y aislala del suelo.</li>
+            <li>Abrigala con mantas, cubriendo cabeza y cuello.</li>
+            <li>Si está consciente, dale una bebida tibia y dulce, sin alcohol.</li>
+        </ol>
+        <p class="no"><b>No hagas:</b> frotarla, usar baños muy calientes o calor directo fuerte. Movela con suavidad.</p>
+        <p class="video"><a href="https://www.youtube.com/results?search_query=golpe+de+calor+hipotermia+primeros+auxilios" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
+    </div></details>
+
+    <p class="aviso">Esta guía no reemplaza un curso presencial de primeros auxilios ni la atención médica profesional.</p>
+    <p style="text-align:center"><a class="back-link" href="{% url 'inicio' %}">Volver al inicio</a></p>
+</div>
 </main>
 {% endblock %}

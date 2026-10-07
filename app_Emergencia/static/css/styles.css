@@ -5,7 +5,10 @@
 	--text: #263b35;
 	--white: #ffffff;
 }
+.cac{
+	text-decoration: none
 
+}
 * {
 	box-sizing: border-box;
 }
@@ -223,3 +226,4 @@ body {
 		grid-template-columns: 1fr;
 	}
 }
+

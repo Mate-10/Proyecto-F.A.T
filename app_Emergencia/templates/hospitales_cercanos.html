@@ -20,17 +20,13 @@
         <p class="error">{{ error }}</p>
     {% endif %}
 
-    {% if mapa_url %}
-        <div class="map-preview">
-            <img src="{{ mapa_url }}" alt="Mapa de hospitales cercanos">
-        </div>
-    {% endif %}
+<p>Estos son todos los hospitales disponibles</p>
 
     {% if hospitales_cercanos %}
         <ul class="hospital-list">
             {% for hospital in hospitales_cercanos %}
                 <li class="hospital-card">
-                    <a href="https://www.google.com/maps?q={{ hospital.lat }},{{ hospital.lon }}" target="_blank" class="hospital-link">
+                    <a href="https://www.google.com/maps/search/?api=1&query={{ hospital.maps_query|urlencode }}" target="_blank" class="hospital-link">
                         <img src="{% static hospital.imagen %}" alt="{{ hospital.nombre }}" class="hospital-photo">
                         <div class="hospital-info">
                             <span class="hospital-name">{{ hospital.nombre }}</span>
