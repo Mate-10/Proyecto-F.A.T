@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}SOS | Emergencia{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/sos.css' %}">
+
+<main class="alerta-panel">
+
+	<div class="alerta-header">
+		<h2>🚨 ¿Qué está pasando?</h2>
+		<p>Describe el peligro lo más rápido que puedas.</p>
+	</div>
+
+	<form class="alerta-form" method="post" action="{% url 'sos' %}">
+		{% csrf_token %}
+
+		{% if error %}
+			<div class="alerta-error">{{ error }}</div>
+		{% endif %}
+
+		<label for="descripcion">Describe el peligro</label>
+		<textarea id="descripcion" name="descripcion" maxlength="100" required autofocus
+			placeholder="Ej: choque en la esquina, persona inconsciente..."></textarea>
+
+		<label for="direccion">¿Dónde estás? (opcional)</label>
+		<input type="text" id="direccion" name="direccion" maxlength="50"
+			value="{{ direccion|default:'' }}" placeholder="Calle y número">
+
+		<button type="submit" class="alerta-submit">ENVIAR ALERTA</button>
+
+		<p class="alerta-note">
+			Si es una emergencia grave, llama también al <strong>911</strong> o al <strong>107</strong>.
+		</p>
+	</form>
+
+	<a class="alerta-volver" href="{% url 'inicio' %}">&larr; Volver al inicio</a>
+
+</main>
+{% endblock %}

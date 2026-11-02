@@ -1,23 +1,32 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Inicio | Emergencia{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/inicio.css' %}">
 
 <main class="home-content">
-    <h2>Bienvenido al sistema de emergencias</h2>
-    <p>Desde aquí puedes consultar y gestionar la información de emergencias.</p>
 
-    <div class="action-grid">
-        <a class="action-button" href="{% url 'guia_emergencia' %}">Guía de emergencia</a>
-        <a class="action-button" href="{% url 'hospitales_cercanos' %}">Hospitales cercanos</a>
-        <a class="action-button" href="{% url 'formulario_emergencia' %}">Formulario de emergencia</a>
-        <a class="action-button" href="{% url 'tutoriales' %}">Tutoriales</a>
-    </div>
+	{% if messages %}
+		{% for message in messages %}
+			<div class="sos-message {{ message.tags }}">{{ message }}</div>
+		{% endfor %}
+	{% endif %}
 
+	<h2>Bienvenido al sistema de emergencias</h2>
+	<p>Desde aquí puedes consultar y gestionar la información de emergencias.</p>
 
+	<div class="sos-wrapper">
+		<a class="sos-button" href="{% url 'sos' %}" aria-label="Pedir ayuda">SOS</a>
+	</div>
 
-
+	<div class="action-grid">
+		<a class="action-button" href="{% url 'guia_emergencia' %}">Guía de emergencia</a>
+		<a class="action-button" href="{% url 'hospitales_cercanos' %}">Hospitales cercanos</a>
+		<a class="action-button" href="{% url 'formulario_emergencia' %}">Formulario de emergencia</a>
+		<a class="action-button" href="{% url 'tutoriales' %}">Tutoriales</a>
+	</div>
 
 </main>
 {% endblock %}

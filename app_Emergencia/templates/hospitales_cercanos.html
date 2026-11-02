@@ -12,17 +12,27 @@
 
     <form method="POST" class="hospital-search-form">
         {% csrf_token %}
-        <input type="text" name="direccion" placeholder="Ej: Av. Colón 500, Córdoba" required>
+        <input type="text" name="direccion" value="{{ direccion|default:'' }}" placeholder="Ej: Av. Colón 500, Córdoba" required>
         <button type="submit">Buscar</button>
     </form>
 
     {% if error %}
-        <p class="error">{{ error }}</p>
+        <p class="aviso-error">⚠️ {{ error }}</p>
     {% endif %}
 
-<p>Estos son todos los hospitales disponibles</p>
-
     {% if hospitales_cercanos %}
+
+        {% if mapa_url %}
+            <div class="mapa-wrapper">
+                <div class="mapa-leyenda">
+                    🔴 Tú &nbsp;&nbsp;&nbsp;&nbsp; 🔵 Hospitales
+                </div>
+                <img src="{{ mapa_url }}" alt="Mapa con tu ubicación en rojo y los hospitales en azul">
+            </div>
+        {% endif %}
+
+        <p>Hospitales ordenados del más cercano al más lejano:</p>
+
         <ul class="hospital-list">
             {% for hospital in hospitales_cercanos %}
                 <li class="hospital-card">

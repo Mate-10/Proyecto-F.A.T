@@ -11,6 +11,14 @@
     <h2>Tutoriales de primeros auxilios</h2>
     <p class="intro">Elegí una emergencia y seguí los pasos en orden.</p>
 
+    {% if abrir %}
+    <p class="intro"><b>Según lo que describiste, empezá por este tutorial:</b></p>
+    {% endif %}
+
+    {% if no_encontrado %}
+    <p class="aviso">No pudimos identificar la emergencia. Elegí una de la lista de abajo.</p>
+    {% endif %}
+
     <div class="sos">
         <b>Ante una emergencia grave llamá ya:</b>
         <span>Emergencias médicas (SAME): <b>107</b></span>
@@ -33,7 +41,7 @@
         <a href="#electrico">Accidente eléctrico</a><a href="#calor">Calor y frío extremo</a>
     </nav>
 
-    <details id="herida"><summary><span class="ic"></span>Herida o corte profundo</summary><div class="cuerpo">
+    <details id="herida"{% if abrir == 'herida' %} open{% endif %}><summary><span class="ic"></span>Herida o corte profundo</summary><div class="cuerpo">
         <ol>
             <li>Lavate las manos y ponete guantes si tenés.</li>
             <li>Presioná la herida con gasa o tela limpia, de forma firme y continua.</li>
@@ -46,7 +54,7 @@
         <p class="video"><a href="https://www.youtube.com/watch?v=Zf7HuY-fITU" target="_blank" rel="noopener">▶ Ver video (Cruz Roja Mexicana)</a></p>
     </div></details>
 
-    <details id="atragantamiento"><summary><span class="ic"></span>Persona que se atraganta (adulto)</summary><div class="cuerpo">
+    <details id="atragantamiento"{% if abrir == 'atragantamiento' %} open{% endif %}><summary><span class="ic"></span>Persona que se atraganta (adulto)</summary><div class="cuerpo">
         <ol>
             <li>Preguntale: «¿Te estás atragantando?». Si puede toser, hablar o respirar, animalo a seguir tosiendo.</li>
             <li>Si no puede hablar, toser ni respirar, ubicate detrás y inclinalo hacia adelante.</li>
@@ -59,7 +67,7 @@
         <p class="video"><a href="https://www.youtube.com/watch?v=Zf7HuY-fITU" target="_blank" rel="noopener">▶ Ver video (Cruz Roja Mexicana)</a></p>
     </div></details>
 
-    <details id="bebe"><summary><span class="ic"></span>Bebé que se atraganta (menos de 1 año)</summary><div class="cuerpo">
+    <details id="bebe"{% if abrir == 'bebe' %} open{% endif %}><summary><span class="ic"></span>Bebé que se atraganta (menos de 1 año)</summary><div class="cuerpo">
         <ol>
             <li>Si tose con fuerza o llora, dejalo y observalo.</li>
             <li>Si no puede toser, llorar ni respirar, ponelo boca abajo sobre tu antebrazo, con la cabeza más baja que el cuerpo, sosteniéndole la mandíbula.</li>
@@ -72,7 +80,7 @@
         <p class="video"><a href="https://www.youtube.com/watch?v=Zf7HuY-fITU" target="_blank" rel="noopener">▶ Ver video (Cruz Roja Mexicana)</a></p>
     </div></details>
 
-    <details id="quemadura"><summary><span class="ic"></span>Quemaduras</summary><div class="cuerpo">
+    <details id="quemadura"{% if abrir == 'quemadura' %} open{% endif %}><summary><span class="ic"></span>Quemaduras</summary><div class="cuerpo">
         <ol>
             <li>Alejá a la persona de la fuente de calor. Si la ropa está en llamas: que no corra, que se tire al suelo y ruede, o cubrila con una manta.</li>
             <li>Enfriá con agua corriente fresca (no helada) de 10 a 20 minutos.</li>
@@ -85,7 +93,7 @@
         <p class="video"><a href="https://www.youtube.com/watch?v=29sJOBH_3mI" target="_blank" rel="noopener">▶ Ver video (Clínica Alemana)</a></p>
     </div></details>
 
-    <details id="hemorragia"><summary><span class="ic"></span>Hemorragia</summary><div class="cuerpo">
+    <details id="hemorragia"{% if abrir == 'hemorragia' %} open{% endif %}><summary><span class="ic"></span>Hemorragia</summary><div class="cuerpo">
         <ol>
             <li>Acostá a la persona y protegete con guantes.</li>
             <li>Aplicá presión directa y firme con gasa o tela limpia, sin soltar.</li>
@@ -100,7 +108,7 @@
         <p class="video"><a href="https://www.youtube.com/watch?v=29sJOBH_3mI" target="_blank" rel="noopener">▶ Ver video (Clínica Alemana)</a></p>
     </div></details>
 
-    <details id="fractura"><summary><span class="ic"></span>Fractura o posible fractura</summary><div class="cuerpo">
+    <details id="fractura"{% if abrir == 'fractura' %} open{% endif %}><summary><span class="ic"></span>Fractura o posible fractura</summary><div class="cuerpo">
         <ol>
             <li>No muevas la zona lesionada ni intentes acomodar el hueso.</li>
             <li>Inmovilizá en la posición en que está, con una férula (cartón, revista enrollada, tabla) que abarque las articulaciones de arriba y de abajo.</li>
@@ -113,7 +121,7 @@
         <p class="video"><a href="https://www.youtube.com/results?search_query=fractura+primeros+auxilios+inmovilizar+f%C3%A9rula" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
     </div></details>
 
-    <details id="cabeza"><summary><span class="ic"></span>Golpe fuerte en la cabeza</summary><div class="cuerpo">
+    <details id="cabeza"{% if abrir == 'cabeza' %} open{% endif %}><summary><span class="ic"></span>Golpe fuerte en la cabeza</summary><div class="cuerpo">
         <ol>
             <li>Mantené a la persona quieta y observala.</li>
             <li>Si sospechás lesión de cuello, no la muevas.</li>
@@ -124,7 +132,7 @@
         <p class="video"><a href="https://www.youtube.com/results?search_query=golpe+en+la+cabeza+primeros+auxilios+signos+de+alarma" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
     </div></details>
 
-    <details id="desmayo"><summary><span class="ic"></span>Desmayo</summary><div class="cuerpo">
+    <details id="desmayo"{% if abrir == 'desmayo' %} open{% endif %}><summary><span class="ic"></span>Desmayo</summary><div class="cuerpo">
         <ol>
             <li>Acostala boca arriba y elevale las piernas unos 30 cm.</li>
             <li>Aflojale la ropa del cuello y la cintura, y asegurá aire fresco.</li>
@@ -136,7 +144,7 @@
         <p class="video"><a href="https://www.procpr.org/es/training/cpr-first-aid/video/quemaduras-nino-es" target="_blank" rel="noopener">▶ Ver curso en video (ProCPR)</a></p>
     </div></details>
 
-    <details id="convulsion"><summary><span class="ic"></span>Convulsión</summary><div class="cuerpo">
+    <details id="convulsion"{% if abrir == 'convulsion' %} open{% endif %}><summary><span class="ic"></span>Convulsión</summary><div class="cuerpo">
         <ol>
             <li>Anotá la hora de inicio.</li>
             <li>Despejá objetos peligrosos y poné algo blando bajo la cabeza.</li>
@@ -149,7 +157,7 @@
         <p class="video"><a href="https://www.procpr.org/es/training/cpr-first-aid/video/quemaduras-nino-es" target="_blank" rel="noopener">▶ Ver curso en video (ProCPR)</a></p>
     </div></details>
 
-    <details id="alergia"><summary><span class="ic"></span>Reacción alérgica grave</summary><div class="cuerpo">
+    <details id="alergia"{% if abrir == 'alergia' %} open{% endif %}><summary><span class="ic"></span>Reacción alérgica grave</summary><div class="cuerpo">
         <p><b>Cómo reconocerla:</b> ronchas, hinchazón de labios, lengua o garganta, dificultad para respirar, silbidos, vómitos, mareo, palidez.</p>
         <ol>
             <li>Llamá al 107/911 de inmediato.</li>
@@ -161,7 +169,7 @@
         <p class="video"><a href="https://www.youtube.com/results?search_query=anafilaxia+autoinyector+adrenalina+c%C3%B3mo+usar" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
     </div></details>
 
-    <details id="picaduras"><summary><span class="ic"></span>Picaduras y mordeduras</summary><div class="cuerpo">
+    <details id="picaduras"{% if abrir == 'picaduras' %} open{% endif %}><summary><span class="ic"></span>Picaduras y mordeduras</summary><div class="cuerpo">
         <h4>Abeja o avispa</h4>
         <p>Sacá el aguijón raspando con una tarjeta, lavá con agua y jabón y aplicá frío. Vigilá signos de alergia grave.</p>
         <h4>Araña o alacrán</h4>
@@ -174,7 +182,7 @@
         <p class="video"><a href="https://www.youtube.com/watch?v=29sJOBH_3mI" target="_blank" rel="noopener">▶ Ver video (Clínica Alemana)</a></p>
     </div></details>
 
-    <details id="intoxicacion"><summary><span class="ic"></span>Intoxicación</summary><div class="cuerpo">
+    <details id="intoxicacion"{% if abrir == 'intoxicacion' %} open{% endif %}><summary><span class="ic"></span>Intoxicación</summary><div class="cuerpo">
         <ol>
             <li>Asegurate de que el lugar sea seguro (gases, humo, monóxido de carbono).</li>
             <li>Identificá qué sustancia fue, cuánta, a qué hora, y la edad y peso de la persona. Guardá el envase.</li>
@@ -187,7 +195,7 @@
         <p class="video"><a href="https://www.youtube.com/results?search_query=intoxicaci%C3%B3n+primeros+auxilios+qu%C3%A9+hacer" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
     </div></details>
 
-    <details id="acv"><summary><span class="ic"></span>Señales de un ACV</summary><div class="cuerpo">
+    <details id="acv"{% if abrir == 'acv' %} open{% endif %}><summary><span class="ic"></span>Señales de un ACV</summary><div class="cuerpo">
         <ol>
             <li><b>Cara:</b> pedile que sonría. ¿Un lado se cae?</li>
             <li><b>Brazo:</b> que levante los dos brazos. ¿Uno cae o está débil?</li>
@@ -199,7 +207,7 @@
         <p class="video"><a href="https://www.youtube.com/results?search_query=ACV+reconocer+se%C3%B1ales+cara+brazo+habla" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
     </div></details>
 
-    <details id="infarto"><summary><span class="ic"></span>Señales de un infarto</summary><div class="cuerpo">
+    <details id="infarto"{% if abrir == 'infarto' %} open{% endif %}><summary><span class="ic"></span>Señales de un infarto</summary><div class="cuerpo">
         <p><b>Cómo reconocerlo:</b> dolor, presión u opresión en el pecho que puede irradiarse al brazo, mandíbula, cuello o espalda; falta de aire, sudor frío, náuseas, mareo. En mujeres y personas mayores puede ser más leve o atípico.</p>
         <ol>
             <li>Llamá al 107/911 de inmediato.</li>
@@ -210,10 +218,10 @@
         <p class="video"><a href="https://www.youtube.com/results?search_query=infarto+s%C3%ADntomas+qu%C3%A9+hacer+primeros+auxilios" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
     </div></details>
 
-    <details id="rcp"><summary><span class="ic"></span>RCP y uso del desfibrilador (DEA)</summary><div class="cuerpo">
+    <details id="rcp"{% if abrir == 'rcp' %} open{% endif %}><summary><span class="ic"></span>RCP y uso del desfibrilador (DEA)</summary><div class="cuerpo">
         <ol>
             <li>Verificá que sea seguro, sacudila suavemente y gritale. Si no responde y no respira (o solo boquea), es un paro.</li>
-            <li>Llamá al 107/911 (o pedí qu llamen) y que traigan un DEA.</li>
+            <li>Llamá al 107/911 (o pedí que llamen) y que traigan un DEA.</li>
             <li>Acostala boca arriba sobre una superficie dura.</li>
             <li>Compresiones: manos entrelazadas en el centro del pecho, brazos rectos, hundí unos 5 a 6 cm a un ritmo de 100 a 120 por minuto, dejando que el pecho vuelva a subir.</li>
             <li>Si estás entrenado: 30 compresiones y 2 respiraciones boca a boca. Si no, solo compresiones continuas.</li>
@@ -225,7 +233,7 @@
         <p class="video"><a href="https://www.youtube.com/watch?v=Zf7HuY-fITU" target="_blank" rel="noopener">▶ Ver video (Cruz Roja Mexicana)</a></p>
     </div></details>
 
-    <details id="electrico"><summary><span class="ic"></span>Accidente eléctrico</summary><div class="cuerpo">
+    <details id="electrico"{% if abrir == 'electrico' %} open{% endif %}><summary><span class="ic"></span>Accidente eléctrico</summary><div class="cuerpo">
         <ol>
             <li>No toques a la víctima hasta que no haya corriente.</li>
             <li>Cortá la llave general. Si es alta tensión (cables caídos), alejate al menos 10 metros y llamá al 911 y a la empresa de energía.</li>
@@ -237,7 +245,7 @@
         <p class="video"><a href="https://www.youtube.com/results?search_query=accidente+el%C3%A9ctrico+primeros+auxilios+descarga" target="_blank" rel="noopener">▶ Buscar videos en YouTube</a></p>
     </div></details>
 
-    <details id="calor"><summary><span class="ic"></span>Golpe de calor e hipotermia</summary><div class="cuerpo">
+    <details id="calor"{% if abrir == 'calor' %} open{% endif %}><summary><span class="ic"></span>Golpe de calor e hipotermia</summary><div class="cuerpo">
         <h4>Golpe de calor</h4>
         <p>Señales: temperatura muy alta, confusión, piel caliente, desmayo o convulsiones.</p>
         <ol>

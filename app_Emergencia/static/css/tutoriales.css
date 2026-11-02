@@ -46,3 +46,7 @@
 .tuto .aviso{font-size:.88rem;color:#4a5f58;text-align:center;margin-top:22px}
 
 @media(max-width:620px){.tuto .pas{grid-template-columns:1fr}}
+
+details {
+	scroll-margin-top: 9rem;
+}
