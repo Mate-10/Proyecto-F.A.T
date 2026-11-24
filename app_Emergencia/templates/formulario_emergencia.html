@@ -5,10 +5,7 @@
 {% block content %}
 <main class="content-panel">
     <h2>Formulario de emergencia</h2>
-    <for
-    
-    
-    m class="emergency-form" method="post">
+    <form class="emergency-form" method="post">
         {% csrf_token %}
         <label for="nombre">Nombre</label>
         <input id="nombre" name="nombre" type="text" required>

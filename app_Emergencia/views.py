@@ -1,20 +1,21 @@
 # ============================================================
 # IMPORTACIONES
+# Acá se "traen" las herramientas que usa el archivo.
+# Una vista (view) en Django es una función que recibe un "request"
+# (el pedido del navegador) y devuelve una respuesta (una página).
 # ============================================================
-import hashlib          # Para generar un "hash" (código único) que sirve de nombre de archivo del mapa
-import math             # Funciones matemáticas (seno, coseno, raíz...) para calcular distancias
-import re               # Expresiones regulares: buscar patrones de texto (usado para detectar emergencias)
-import unicodedata      # Para quitar tildes de los textos (normalizar)
+import hashlib          # Genera un "hash": un código corto y único a partir de un texto. Se usa para nombrar el archivo del mapa
+import re               # Expresiones regulares: buscar patrones de texto (se usa para detectar el tipo de emergencia)
+import unicodedata      # Herramientas para trabajar con caracteres Unicode; se usa para quitar tildes
 from pathlib import Path  # Manejo cómodo de rutas de carpetas y archivos
 
-import requests         # Para hacer peticiones HTTP a servicios externos (Nominatim)
-from staticmap import StaticMap, CircleMarker  # Para generar la imagen del mapa con puntos de colores
+from staticmap import StaticMap, CircleMarker  # Genera una imagen de mapa y permite dibujar puntos de colores
 from django.conf import settings                # Acceso a la configuración del proyecto (settings.py)
 from django.contrib import messages             # Mensajes temporales para el usuario (ej: "Alerta enviada")
-from django.shortcuts import render, redirect   # render: muestra un HTML / redirect: manda a otra URL
-from django.urls import reverse                 # Convierte el nombre de una URL en su ruta real
+from django.shortcuts import render, redirect   # render: arma y muestra un HTML / redirect: manda al usuario a otra URL
+from django.urls import reverse                 # Convierte el NOMBRE de una URL (ej: 'tutoriales') en su ruta real (ej: /tutoriales/)
 from django.utils import timezone               # Fecha y hora actual (con zona horaria)
-from .models import Usuario, Hospitales, Accidentes  # Modelos (tablas de la base de datos)
+from .models import Usuario, Hospitales, Accidentes  # Modelos = tablas de la base de datos
 
 
 # ============================================================
@@ -22,34 +23,40 @@ from .models import Usuario, Hospitales, Accidentes  # Modelos (tablas de la bas
 # ============================================================
 
 def login(request):
-    # Vista del inicio de sesión
+    # Vista del inicio de sesión.
+    # Hace dos cosas según cómo se llegue a ella:
+    #   - GET  -> el usuario entró a la página: se muestra el formulario vacío
+    #   - POST -> el usuario apretó "Ingresar": se validan sus datos
 
-    # Si el formulario fue enviado (método POST)
+    # request.method dice si el pedido fue GET o POST
     if request.method == 'POST':
 
-        # Se leen los datos que escribió el usuario en el formulario
+        # Se leen los datos que escribió el usuario en el formulario.
+        # Los nombres 'email' y 'contrasena' deben coincidir con el atributo name="" de los inputs del HTML
         email = request.POST.get('email')
         contrasena = request.POST.get('contrasena')
 
-        # Se busca en la base de datos un usuario que coincida con email y contraseña
-        # .first() devuelve el primero encontrado, o None si no hay ninguno
+        # Se busca en la base de datos un usuario con ese email Y esa contraseña.
+        # .filter() devuelve una lista de coincidencias; .first() toma la primera, o None si no hay ninguna
         usuario = Usuario.objects.filter(
             email=email,
             contrasena=contrasena
         ).first()
 
-        # Si se encontró el usuario, las credenciales son correctas
+        # Si se encontró un usuario, las credenciales son correctas
         if usuario:
 
-            # Se guarda el id en la sesión: así el sistema "recuerda" que está logueado
+            # Se guarda el id en la sesión: así el sistema "recuerda" que este navegador está logueado.
+            # Las demás vistas comprueban si existe 'id_usuario' en la sesión
             request.session['id_usuario'] = usuario.id_usuario
 
-            # Se lo manda a la página de inicio
+            # Se lo manda a la página de inicio (se usa el nombre de la URL, no la ruta)
             return redirect('inicio')
 
         else:
 
-            # Si no existe, se vuelve a mostrar el login con un mensaje de error
+            # Credenciales incorrectas: se vuelve a mostrar el login con un mensaje de error.
+            # El diccionario {'error': ...} son las variables que la plantilla HTML puede usar
             return render(request, 'login.html', {
                 'error': 'Correo o contraseña incorrectos.'
             })
@@ -63,7 +70,8 @@ def registro(request):
 
     if request.method == 'POST':
 
-        # Se leen los datos del formulario. "or ''" evita errores si el campo viene vacío (None)
+        # Se leen los datos del formulario.
+        # "or ''" evita errores si el campo viene vacío (None).
         # .strip() elimina espacios al principio y al final
         nombre = (request.POST.get('nombre') or '').strip()
         ubicacion = (request.POST.get('ubicacion') or '').strip()
@@ -71,8 +79,8 @@ def registro(request):
         email = (request.POST.get('email') or '').strip()
         contrasena = request.POST.get('contrasena') or ''
 
-        # Validaciones según el tamaño de las columnas de la base de datos
-        # Si algo falla, se guarda el mensaje en la variable "error"
+        # Validaciones según el tamaño de las columnas de la base de datos.
+        # Si algo falla, se guarda el mensaje en la variable "error"; si no, queda en None
         error = None
 
         if not nombre or not email or not contrasena:
@@ -94,7 +102,7 @@ def registro(request):
         if error:
             return render(request, 'registro.html', {'error': error})
 
-        # Se verifica que no exista ya un usuario con ese correo
+        # Se verifica que no exista ya un usuario con ese correo (el email no debe repetirse)
         usuario_existente = Usuario.objects.filter(
             email=email
         ).first()
@@ -105,7 +113,7 @@ def registro(request):
                 'error': 'Este correo ya está registrado.'
             })
 
-        # Si todo está bien, se crea el usuario nuevo (INSERT en la base de datos)
+        # Si todo está bien, se crea el usuario nuevo (equivale a un INSERT en la base de datos)
         Usuario.objects.create(
             nombre=nombre,
             ubicacion=ubicacion,
@@ -114,7 +122,7 @@ def registro(request):
             contrasena=contrasena
         )
 
-        # Después de registrarse, se lo manda al login
+        # Después de registrarse, se lo manda al login para que inicie sesión
         return redirect('login')
 
     # Si es GET, se muestra el formulario de registro vacío
@@ -132,11 +140,12 @@ def inicio(request):
     if 'id_usuario' not in request.session:
         return redirect('login')
 
+    # Si está logueado, se muestra la página de inicio
     return render(request, 'inicio.html')
 
 
 def guia_emergencia(request):
-    # Muestra una página informativa fija (no requiere login)
+    # Muestra una página informativa fija (no requiere login, cualquiera puede verla)
 
     return render(request, 'guia_emergencia.html')
 
@@ -145,7 +154,8 @@ def guia_emergencia(request):
 # HOSPITALES CERCANOS
 # ============================================================
 
-# Diccionario: nombre del hospital -> ruta de su imagen (dentro de la carpeta static)
+# Diccionario: nombre del hospital -> ruta de su imagen (dentro de la carpeta static).
+# La clave debe ser IGUAL al nombre guardado en la base de datos
 imagenes_hospitales = {
     'Hospital Nacional de Clínicas': 'img/hospitalclinicascordoba.webp',
     'Hospital San Roque': 'img/hopital_sanroque.webp',
@@ -157,8 +167,8 @@ imagenes_hospitales = {
     'Sanatorio Allende (Nueva Córdoba)': 'img/sanatorio_allende-nueva_cordoba.jpg',
 }
 
-# Diccionario: nombre del hospital -> (latitud, longitud)
-# Sirve para calcular la distancia sin consultar un servicio externo
+# Diccionario: nombre del hospital -> (latitud, longitud).
+# Sirve para ubicar cada hospital en el mapa
 coordenadas_hospitales = {
     'Hospital Nacional de Clínicas': (-31.406402, -64.203261),
     'Hospital San Roque': (-31.417547, -64.179087),
@@ -171,136 +181,27 @@ coordenadas_hospitales = {
 }
 
 
-def normalizar(texto):
-    # Deja el texto "limpio" para poder compararlo: sin espacios extra, en minúsculas y sin tildes
-    # Ejemplo: "  Córdoba " -> "cordoba"
-    texto = texto.strip().lower()
-    # NFKD separa cada letra de su tilde (ej: "é" -> "e" + "´")
-    texto = unicodedata.normalize('NFKD', texto)
-    # Se descartan los caracteres que son tildes (combining) y se vuelve a unir el texto
-    texto = ''.join(c for c in texto if not unicodedata.combining(c))
-    return texto
-
-
-# Mismo diccionario de coordenadas, pero con los nombres normalizados
-# Así "Hospital Nacional de Clínicas" de la BD coincide aunque tenga distintas tildes o mayúsculas
-coordenadas_hospitales_normalizadas = {
-    normalizar(nombre): coords
-    for nombre, coords in coordenadas_hospitales.items()
-}
-
-
-def calcular_distancia(lat1, lon1, lat2, lon2):
-    # Calcula la distancia en km entre dos puntos del planeta con la fórmula de Haversine
-    # (tiene en cuenta que la Tierra es una esfera)
-
-    radio_tierra = 6371  # Radio de la Tierra en kilómetros
-
-    # Las funciones trigonométricas trabajan en radianes, por eso se convierten los grados
-    lat1_rad = math.radians(lat1)
-    lat2_rad = math.radians(lat2)
-    delta_lat = math.radians(lat2 - lat1)   # Diferencia de latitud
-    delta_lon = math.radians(lon2 - lon1)   # Diferencia de longitud
-
-    # Fórmula de Haversine
-    a = math.sin(delta_lat / 2) ** 2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(delta_lon / 2) ** 2
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-
-    # Distancia final = radio * ángulo
-    return radio_tierra * c
-
-
 def hospitales_cercanos(request):
-    # Recibe una dirección, la convierte en coordenadas y muestra los hospitales ordenados por cercanía
+    # Muestra el mapa con todos los hospitales y la lista de hospitales (cada uno con link a Google Maps).
+    # Ya no pide ninguna dirección ni calcula distancias: siempre muestra todos los hospitales
 
-    # Si entra por GET, solo se muestra el formulario
-    if request.method != 'POST':
-        return render(request, 'hospitales_cercanos.html')
-
-    # Dirección que escribió el usuario (sin espacios sobrantes)
-    direccion_original = (request.POST.get('direccion') or '').strip()
-
-    # Si no escribió nada, se muestra un error
-    if not direccion_original:
-        return render(request, 'hospitales_cercanos.html', {
-            'error': 'Escribí una dirección para buscar.'
-        })
-
-    direccion = direccion_original
-
-    # Si el usuario no escribió "Córdoba", se agrega para que la búsqueda sea más precisa
-    if 'córdoba' not in direccion.lower() and 'cordoba' not in direccion.lower():
-        direccion = f'{direccion}, Córdoba, Argentina'
-
-    # ---------- 1) Buscar las coordenadas de la dirección ----------
-    # Se usa Nominatim (servicio gratuito de OpenStreetMap) para convertir dirección -> lat/lon
-    try:
-        respuesta = requests.get(
-            'https://nominatim.openstreetmap.org/search',
-            params={
-                'q': direccion,                           # Texto a buscar
-                'format': 'json',                         # Formato de la respuesta
-                'countrycodes': 'ar',                     # Solo resultados de Argentina
-                'viewbox': '-64.35,-31.30,-64.05,-31.55', # Rectángulo de la ciudad de Córdoba
-                'bounded': 1                              # Obliga a buscar solo dentro del rectángulo
-            },
-            # Nominatim exige identificarse con un User-Agent (reemplazá por tu email real)
-            headers={'User-Agent': 'app-emergencia/1.0 (tu_email@ejemplo.com)'},
-            timeout=10,  # Si tarda más de 10 segundos, se corta
-        )
-        respuesta.raise_for_status()   # Lanza un error si el servidor respondió con código de falla (404, 500...)
-        resultados = respuesta.json()  # Convierte la respuesta JSON en una lista de Python
-
-    except (requests.ConnectionError, requests.Timeout):
-        # Error de conexión o demasiado tiempo de espera: probablemente sin internet
-        return render(request, 'hospitales_cercanos.html', {
-            'error': 'No pudimos conectarnos para buscar tu dirección. '
-                     'Revisá tu conexión a internet e intentá de nuevo en unos segundos.',
-            'direccion': direccion_original,
-        })
-
-    except (requests.RequestException, ValueError):
-        # Cualquier otro error de requests, o que la respuesta no sea un JSON válido
-        return render(request, 'hospitales_cercanos.html', {
-            'error': 'El servicio de direcciones no está disponible en este momento. '
-                     'Probá de nuevo en un rato.',
-            'direccion': direccion_original,
-        })
-
-    # Si la lista de resultados está vacía, la dirección no existe
-    if not resultados:
-        return render(request, 'hospitales_cercanos.html', {
-            'error': 'No encontramos esa dirección. Probá con calle y número, por ejemplo: Av. Colón 500.',
-            'direccion': direccion_original,
-        })
-
-    # Se toma el primer resultado (el más probable) y se guardan sus coordenadas como números
-    lat_usuario = float(resultados[0]['lat'])
-    lon_usuario = float(resultados[0]['lon'])
-
-    # ---------- 2) Calcular distancias a los hospitales ----------
     lista_hospitales = []
 
     # Se recorren todos los hospitales guardados en la base de datos
     for hospital in Hospitales.objects.all():
 
-        # Se buscan las coordenadas del hospital usando su nombre normalizado
-        coordenadas = coordenadas_hospitales_normalizadas.get(
-            normalizar(hospital.nombre)
-        )
+        # Se buscan las coordenadas del hospital usando su nombre (igual al guardado en la base de datos)
+        coordenadas = coordenadas_hospitales.get(hospital.nombre)
 
         # Si no hay coordenadas para ese nombre, se avisa por consola y se salta al siguiente
         if coordenadas is None:
             print('NO MATCHEA:', repr(hospital.nombre))
             continue
 
+        # Se separan las dos coordenadas del hospital
         lat_hospital, lon_hospital = coordenadas
 
         # Se agregan datos extra al objeto hospital (no se guardan en la BD, solo se usan en la plantilla)
-        hospital.distancia = calcular_distancia(
-            lat_usuario, lon_usuario,
-            lat_hospital, lon_hospital
-        )
         # Imagen del hospital; si no hay una asignada, se usa una por defecto
         hospital.imagen = imagenes_hospitales.get(hospital.nombre, 'img/hospital-default.jpg')
         hospital.lat = lat_hospital
@@ -313,41 +214,34 @@ def hospitales_cercanos(request):
     if not lista_hospitales:
         return render(request, 'hospitales_cercanos.html', {
             'error': 'No pudimos cargar los hospitales en este momento.',
-            'direccion': direccion_original,
         })
 
-    # Se ordena la lista de menor a mayor distancia (el más cercano primero)
-    lista_hospitales.sort(key=lambda h: h.distancia)
-
-    # ---------- 3) Mapa: si falla, igual se muestra la lista ----------
+    # ---------- Mapa: si falla, igual se muestra la lista ----------
     mapa_url = None  # Si algo sale mal, queda en None y la plantilla no muestra el mapa
 
     try:
-        # Carpeta donde se guardan las imágenes subidas/generadas (MEDIA_ROOT)
+        # Carpeta donde se guardan las imágenes generadas (MEDIA_ROOT)
         carpeta = Path(settings.MEDIA_ROOT)
         carpeta.mkdir(parents=True, exist_ok=True)  # La crea si no existe
 
-        # Se arma un nombre único según la ubicación del usuario
-        # Así, si busca la misma dirección dos veces, reutiliza el mapa ya generado
-        clave = hashlib.md5(
-            f'{lat_usuario:.4f},{lon_usuario:.4f}'.encode()
-        ).hexdigest()[:12]
-        nombre_archivo = f'mapa_{clave}.png'
+        # Se arma un nombre de archivo según las posiciones de los hospitales.
+        # Así el mapa se genera una sola vez y se reutiliza (y se regenera solo si cambian los hospitales)
+        firma = '|'.join(f'{h.lat:.4f},{h.lon:.4f}' for h in lista_hospitales)
+        clave = hashlib.md5(firma.encode()).hexdigest()[:12]
+        nombre_archivo = f'mapa_hospitales_{clave}.png'
         ruta_imagen = carpeta / nombre_archivo
 
         # Solo se genera el mapa si todavía no existe
         if not ruta_imagen.exists():
-            # Se crea un mapa de 600x400 píxeles que descarga los "mosaicos" de OpenStreetMap
+            # Se crea un mapa de 600x400 píxeles que descarga los "mosaicos" (tiles) de OpenStreetMap
             mapa = StaticMap(
                 600, 400,
                 url_template='https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                 headers={'User-Agent': 'app-emergencia/1.0 (tu_email@ejemplo.com)'},
                 tile_request_timeout=10,
             )
-            # Punto ROJO: ubicación del usuario (ojo: staticmap usa el orden longitud, latitud)
-            mapa.add_marker(CircleMarker((lon_usuario, lat_usuario), 'red', 12))
 
-            # Puntos AZULES: uno por cada hospital
+            # Puntos AZULES: uno por cada hospital (ojo: staticmap usa el orden longitud, latitud)
             for hospital in lista_hospitales:
                 mapa.add_marker(CircleMarker((hospital.lon, hospital.lat), 'blue', 12))
 
@@ -359,13 +253,13 @@ def hospitales_cercanos(request):
 
     except Exception as e:
         # Cualquier falla (sin internet, error de escritura...) solo se imprime en consola
+        # y la página se muestra igual, sin mapa
         print('Error al generar el mapa:', e)
 
-    # Se muestra la página con el mapa, los hospitales ordenados y la dirección buscada
+    # Se muestra la página con el mapa y la lista de hospitales
     return render(request, 'hospitales_cercanos.html', {
         'mapa_url': mapa_url,
         'hospitales_cercanos': lista_hospitales,
-        'direccion': direccion_original,
     })
 
 
@@ -373,10 +267,12 @@ def hospitales_cercanos(request):
 # FORMULARIO DE EMERGENCIA -> TUTORIALES
 # ============================================================
 
-# Lista de reglas: (clave del tutorial, patrón de palabras a buscar)
-# Cada patrón es una expresión regular. "|" significa "o" (cualquiera de esas palabras)
-# \b marca el límite de una palabra (evita coincidencias dentro de otras palabras)
-# .* significa "cualquier texto en el medio"
+# Lista de reglas: (clave del tutorial, patrón de palabras a buscar).
+# Cada patrón es una expresión regular:
+#   "|"  significa "o" (cualquiera de esas palabras)
+#   \b   marca el límite de una palabra (evita coincidencias dentro de otras palabras)
+#   .*   significa "cualquier texto en el medio"
+# Los patrones NO llevan tildes porque el texto del usuario se normaliza antes de compararlo.
 # El ORDEN IMPORTA: se revisan de arriba hacia abajo y gana la primera que coincide
 # (por eso "rcp" e "infarto" van primero, por ser las más graves)
 REGLAS_EMERGENCIA = [
@@ -400,15 +296,29 @@ REGLAS_EMERGENCIA = [
     ('calor', r'golpe de calor|insolacion|calor|hipotermia|\bfrio|congel'),
 ]
 
-# Conjunto con todas las claves válidas (se arma recorriendo la lista de reglas)
+# Conjunto con todas las claves válidas (se arma recorriendo la lista de reglas).
 # Sirve para validar que la clave que llega por la URL sea una de las permitidas
 CLAVES_TUTORIALES = {clave for clave, _ in REGLAS_EMERGENCIA}
+
+
+def normalizar(texto):
+    # Deja el texto "limpio" para poder compararlo: sin espacios extra, en minúsculas y sin tildes.
+    # Ejemplo: "  Quemó " -> "quemo"
+    # Solo se usa para detectar emergencias (los patrones de arriba no llevan tildes)
+
+    # strip() saca espacios de los costados y lower() pasa todo a minúsculas
+    texto = texto.strip().lower()
+    # NFKD separa cada letra de su tilde (ej: "é" -> "e" + "´")
+    texto = unicodedata.normalize('NFKD', texto)
+    # Se descartan los caracteres que son tildes (combining) y se vuelve a unir el texto
+    texto = ''.join(c for c in texto if not unicodedata.combining(c))
+    return texto
 
 
 def detectar_emergencia(descripcion):
     # Recibe lo que escribió el usuario y devuelve la clave del tutorial que corresponde
 
-    # Se normaliza (minúsculas y sin tildes) para que coincida con los patrones, que no tienen tildes
+    # Se normaliza (minúsculas y sin tildes) para que coincida con los patrones
     texto = normalizar(descripcion)
 
     # Se prueban las reglas en orden
@@ -417,7 +327,7 @@ def detectar_emergencia(descripcion):
         if re.search(patron, texto):
             return clave  # Se devuelve la primera coincidencia
 
-    # Si ninguna regla coincidió
+    # Si ninguna regla coincidió, no se detectó nada
     return None
 
 
@@ -426,14 +336,15 @@ def formulario_emergencia(request):
 
     if request.method == 'POST':
 
-        # Texto que escribió el usuario
+        # Texto que escribió el usuario en el campo "Describe la emergencia"
         descripcion = request.POST.get('descripcion', '')
+        # Se busca qué tutorial corresponde (o None si no hay coincidencia)
         clave = detectar_emergencia(descripcion)
 
         if clave:
             # Se redirige a tutoriales con la clave en la URL:
-            # "?abrir=clave" le indica a la plantilla qué tutorial abrir
-            # "#clave" hace que el navegador baje hasta esa sección
+            #   "?abrir=clave" le indica a la plantilla qué tutorial desplegar
+            #   "#clave" hace que el navegador baje hasta esa sección
             return redirect(f"{reverse('tutoriales')}?abrir={clave}#{clave}")
 
         # Si no se detectó ninguna emergencia, se avisa con ?no_encontrado=1
@@ -450,11 +361,12 @@ def tutoriales(request):
     abrir = request.GET.get('abrir', '')
 
     # Seguridad: si el valor no es una clave válida, se ignora
+    # (evita que alguien escriba cualquier cosa en la URL)
     if abrir not in CLAVES_TUTORIALES:
         abrir = ''
 
     return render(request, 'tutoriales.html', {
-        'abrir': abrir,                                          # Tutorial a desplegar
+        'abrir': abrir,                                            # Tutorial a desplegar
         'no_encontrado': request.GET.get('no_encontrado') == '1',  # True si no se encontró coincidencia
     })
 

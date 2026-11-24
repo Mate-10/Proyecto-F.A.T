@@ -1,41 +1,3 @@
-/* ---------- Buscador ---------- */
-.hospital-search-form {
-	display: flex;
-	gap: 0.6rem;
-	margin: 1.5rem auto;
-	max-width: 600px;
-}
-
-.hospital-search-form input[type="text"] {
-	border: 1px solid #b8d1c6;
-	border-radius: 6px;
-	flex: 1;
-	font: inherit;
-	padding: 0.75rem;
-}
-
-.hospital-search-form input[type="text"]:focus {
-	border-color: var(--blue);
-	outline: none;
-}
-
-.hospital-search-form button {
-	background: var(--blue-dark);
-	border: 0;
-	border-radius: 6px;
-	color: var(--white);
-	cursor: pointer;
-	font: inherit;
-	font-weight: bold;
-	padding: 0.75rem 1.25rem;
-	transition: background 0.2s ease;
-}
-
-.hospital-search-form button:hover,
-.hospital-search-form button:focus {
-	background: var(--blue);
-}
-
 /* ---------- Aviso de error ---------- */
 .aviso-error {
 	background: #fff4e5;
@@ -80,10 +42,6 @@
 	display: inline-block;
 	height: 14px;
 	width: 14px;
-}
-
-.punto-rojo {
-	background: red;
 }
 
 .punto-azul {
@@ -142,17 +100,8 @@
 	font-weight: bold;
 }
 
-.hospital-distance {
-	color: var(--blue);
-	font-weight: bold;
-}
-
 /* ---------- Celular ---------- */
 @media (max-width: 600px) {
-	.hospital-search-form {
-		flex-direction: column;
-	}
-
 	.hospital-photo {
 		height: 80px;
 		width: 100px;
